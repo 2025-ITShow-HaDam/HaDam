@@ -35,7 +35,7 @@ function Write({ onDiarySaved }) {
 
       try {
         const response = await axios.post(
-          "http://localhost:5000/write-diary",
+          "http://54.180.104.56:3000/write-diary",
           payload,
           {
             headers: {

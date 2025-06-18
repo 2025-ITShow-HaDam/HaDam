@@ -16,7 +16,7 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
+      const response = await axios.post("http://54.180.104.56:3000/api/auth/login", {
         user_id : userId,
         password
       });
