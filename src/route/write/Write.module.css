@@ -77,7 +77,7 @@
 
 .popupOverlay {
   position: fixed;
-  top: 100px;
+  top: 200px;
   left: 0;
   width: 100vw;
   height: 100vh;
