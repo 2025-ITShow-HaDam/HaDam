@@ -16,18 +16,19 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
+      const response = await axios.post("http://54.180.104.56:3000/api/auth/login", {
         user_id : userId,
         password
       });
-
+      console.log(response.data);
       
-      const { token, email, user_id, name } = response.data;
+      const { token, user_id, email, name, profile } = response.data;
       alert("로그인 성공!");
       localStorage.setItem("token", token);
       localStorage.setItem("email", email);
       localStorage.setItem("user_id", user_id);
       localStorage.setItem("name", name);
+      localStorage.setItem("profile", profile);
        navigate('/');
     } catch (error) {
       console.error("로그인 실패:", error);
