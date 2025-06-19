@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./my.module.css";
 import { Link } from "react-router-dom";
-import Nav from "../../components/nav"
+import Nav from "../../components/nav";
+import profileImg from "./profile.png";
 
 function My() {
   const [events, setEvents] = useState(new Map());
@@ -11,7 +12,7 @@ function My() {
     d.setHours(0, 0, 0, 0);
     return d;
   });
-    const name = localStorage.getItem("name");
+  const name = localStorage.getItem("name");
   const user_id = localStorage.getItem("user_id");
   const profile = localStorage.getItem("profile");
 
@@ -54,27 +55,29 @@ function My() {
     if (eventsMap.size === 0) return getNextSunday(threeMonthsAgo);
     const dates = Array.from(eventsMap.keys()).map((d) => new Date(d));
     const earliestEvent = new Date(Math.min(...dates));
-    const base = earliestEvent < threeMonthsAgo ? earliestEvent : threeMonthsAgo;
+    const base =
+      earliestEvent < threeMonthsAgo ? earliestEvent : threeMonthsAgo;
     return getNextSunday(base);
   }
 
   // 정사각형 스타일
   function squareStyle(count) {
-  let backgroundColor = "#E0E0E0"; // 기본 색
-  if (count === 1) {
-    backgroundColor = "#FFD8D4";
-  } else if (count === 2) {
-    backgroundColor = "#FFB2A9";
-  } else if (count >= 3) {
-    backgroundColor = "#FF6B5B";
-  }
+    let backgroundColor = "#E0E0E0"; // 기본 색
+    if (count === 1) {
+      backgroundColor = "#FFD8D4";
+    } else if (count === 2) {
+      backgroundColor = "#FFB2A9";
+    } else if (count >= 3) {
+      backgroundColor = "#FF6B5B";
+    }
 
-  return {
-    width: 20,
-    height: 20,
-    borderRadius: 4,
-    backgroundColor,
-  };}
+    return {
+      width: 18,
+      height: 18,
+      borderRadius: 4,
+      backgroundColor,
+    };
+  }
 
   // 데이터 fetch
   useEffect(() => {
@@ -131,113 +134,189 @@ function My() {
       : [];
 
   return (
-    <div style={{display: "flex", justifyContent: "center", flexDirection: "column", alignItems: "center"}}>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
       <div className={styles.header}>
-        <div style={{ borderRadius: "50%", width: "80px", height: "80px", marginLeft: "30px" }}>
+        <div
+          style={{
+            borderRadius: "50%",
+            width: "80px",
+            height: "80px",
+            marginLeft: "30px",
+          }}
+        >
           <img
-            style={{ width: "100%", height: "100%", objectFit: "cover" }}
-            src={profile}
+            style={{
+              width: "80%",
+              height: "80%",
+              objectFit: "cover",
+              marginTop: "10px",
+              marginLeft: "18px",
+            }}
+            src={profileImg}
             alt="프로필 이미지"
           />
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: "10px" }}>
-          <span style={{ fontSize: "22px", color: "white" }}>{name}</span>
-          <span style={{ fontSize: "16px", color: "black" }}>#{user_id}</span>
+          <span style={{ fontSize: "20px", color: "white" }}>{name}</span>
+          <span style={{ fontSize: "14px", color: "black" }}>#{user_id}</span>
         </div>
       </div>
 
       <div>
         <div>
-           
-                <div style={{display: "flex", alignItems: "center", justifyContent: "space-between"}}>
-                    <p style={{ marginTop: "80px", marginLeft: "12px", fontSize: "20px", marginBottom: "20px" }}>일기 작성 커밋</p>
-                    <div style={{ marginTop: "80px", marginRight: "0px", marginBottom: "20px" }}>
-                        총 개수: {Array.from(events.values()).reduce((a, b) => a + b, 0)}
-                    </div>
-                </div>
-
-             <div className={styles.thanksBox}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <p
+              style={{
+                marginTop: "60px",
+                fontSize: "17px",
+                marginLeft: "7px",
+                marginBottom: "12px",
+              }}
+            >
+              일기 작성 커밋
+            </p>
             <div
-                style={{
-                marginTop: "12px",
+              style={{
+                marginTop: "60px",
+                marginBottom: "12px",
+                marginRight: "7px",
+                fontSize: "14px",
+              }}
+            >
+              총 개수: {Array.from(events.values()).reduce((a, b) => a + b, 0)}
+            </div>
+          </div>
+
+          <div className={styles.thanksBox}>
+            <div
+              style={{
+                marginTop: "10px",
                 marginLeft: "10px",
                 display: "grid",
-                gridTemplateRows: `repeat(7, 20px)`,
+                gridTemplateRows: `repeat(7, 18px)`,
                 gridAutoFlow: "column",
                 gap: 4,
+                padding: "20px 15px 10px 10px",
                 userSelect: "none",
-                }}
+              }}
             >
-                {paddedDateArray.map((date, idx) => {
+              {paddedDateArray.map((date, idx) => {
                 const key = formatDate(date);
                 const count = events.get(key) || 0;
                 return (
-                    <div key={key} title={`${key} - ${count}개`} style={squareStyle(count)} />
+                  <div
+                    key={key}
+                    title={`${key} - ${count}개`}
+                    style={squareStyle(count)}
+                  />
                 );
-                })}
+              })}
             </div>
 
             {futureDates.length > 0 && (
-                <div
+              <div
                 style={{
-                    marginTop: 20,
-                    display: "grid",
-                    gridTemplateRows: `repeat(7, 20px)`,
-                    gridAutoFlow: "column",
-                    gap: 4,
+                  marginTop: "10px",
+                  marginLeft: "10px",
+                  display: "grid",
+                  gridTemplateRows: `repeat(7, 18px)`,
+                  gridAutoFlow: "column",
+                  gap: 4,
+                  paddingTop: "10px",
+                  userSelect: "none",
                 }}
-                >
+              >
                 {futureDates.map((date, idx) => {
-                    const key = formatDate(date);
-                    const count = events.get(key) || 0;
-                    return (
-                    <div key={key} title={`${key} - ${count}개`} style={squareStyle(count)} />
-                    );
+                  const key = formatDate(date);
+                  const count = events.get(key) || 0;
+                  return (
+                    <div
+                      key={key}
+                      title={`${key} - ${count}개`}
+                      style={squareStyle(count)}
+                    />
+                  );
                 })}
-                </div>
+              </div>
             )}
-            </div>
-           <div style={{ display: "flex", alignItems: "center", gap: 10, marginTop: "20px", marginLeft: "10px" }}>
-                <span>색상강도</span>
-                <div style={{
-                    width: 20,
-                    height: 20,
-                    borderRadius: 4,
-                    backgroundColor: "#E0E0E0",
-                }} />
+          </div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              marginTop: "20px",
+              marginLeft: "10px",
+            }}
+          >
+            <span style={{ fontSize: "15px" }}>색상강도</span>
+            <div
+              style={{
+                width: 16,
+                height: 16,
+                borderRadius: 4,
+                backgroundColor: "#E0E0E0",
+              }}
+            />
 
-                <div style={{
-                    width: 20,
-                    height: 20,
-                    borderRadius: 4,
-                    backgroundColor: "#FFD8D4",
-                }} />
+            <div
+              style={{
+                width: 16,
+                height: 16,
+                borderRadius: 4,
+                backgroundColor: "#FFD8D4",
+              }}
+            />
 
-                <div style={{
-                    width: 20,
-                    height: 20,
-                    borderRadius: 4,
-                    backgroundColor: "#FFB2A9",
-                }} />
+            <div
+              style={{
+                width: 16,
+                height: 16,
+                borderRadius: 4,
+                backgroundColor: "#FFB2A9",
+              }}
+            />
 
-                <div style={{
-                    width: 20,
-                    height: 20,
-                    borderRadius: 4,
-                    backgroundColor: "#FF6B5B",
-                }} />
-                </div>
+            <div
+              style={{
+                width: 16,
+                height: 16,
+                borderRadius: 4,
+                backgroundColor: "#FF6B5B",
+              }}
+            />
+          </div>
         </div>
       </div>
 
-        <Link
-        to="/login"
-        style={{textDecoration: "none"}}
+      <Link to="/login" style={{ textDecoration: "none" }}>
+        <div
+          style={{ display: "flex", gap: "10px", alignItems: "center" }}
+          className={styles.logout}
         >
-            <div style={{display: "flex", gap: "10px", alignItems: "center"}} className={styles.logout}>
-                <span style={{fontSize: "20px", color: "#FF6B5B", marginLeft: "20px"}}>로그아웃</span>
-                <img src="/images/material-symbols-light_logout.png"style={{width: "30px", height: "30px"}} />
-            </div>
+          <span
+            style={{ fontSize: "13px", color: "#FF6B5B", marginLeft: "20px" }}
+          >
+            로그아웃
+          </span>
+          <img
+            src="/images/material-symbols-light_logout.png"
+            style={{ width: "20px", height: "20px" }}
+          />
+        </div>
       </Link>
       <Nav />
     </div>
