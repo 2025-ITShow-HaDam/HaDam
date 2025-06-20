@@ -14,7 +14,7 @@ export default function Best() {
     useEffect(() => {
         async function fetchData() {
             try {
-                    const response = await axios.get("http://54.180.104.56:3000/write-diary", {
+                    const response = await axios.get("https://hadam.mirim-it-show.site/write-diary", {
                         headers: {
                             Authorization: `Bearer ${token}`
                         }

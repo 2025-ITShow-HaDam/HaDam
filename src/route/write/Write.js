@@ -35,7 +35,7 @@ function Write({ onDiarySaved }) {
 
       try {
         const response = await axios.post(
-          "http://54.180.104.56:3000/write-diary",
+          "https://hadam.mirim-it-show.site/write-diary",
           payload,
           {
             headers: {

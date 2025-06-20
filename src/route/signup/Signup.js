@@ -34,7 +34,7 @@ function Signup() {
     }
 
     try {
-      const response = await axios.post("http://54.180.104.56:3000/users", {
+      const response = await axios.post("https://hadam.mirim-it-show.site/users", {
         user_id: form.user_id,
         email: form.email,
         password: form.password,
@@ -45,7 +45,7 @@ function Signup() {
       localStorage.setItem("email", form.email);
       localStorage.setItem("name", form.name);
       
-      const res = await axios.get(`http://54.180.104.56:3000/users/${form.user_id}`);
+      const res = await axios.get(`https://hadam.mirim-it-show.site/users/${form.user_id}`);
       const { profile } = res.data;
       localStorage.setItem("profile", profile)
       navigate('/login');

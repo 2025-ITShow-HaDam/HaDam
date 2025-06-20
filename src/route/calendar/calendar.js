@@ -22,7 +22,7 @@ const Calendar = () => {
         const startOfMonth = currentDate.startOf("month").format("YYYY-MM-DD");
         const endOfMonth = currentDate.endOf("month").format("YYYY-MM-DD");
 
-        const response = await axios.get(`http://54.180.104.56:3000/write-diary`, {
+        const response = await axios.get(`https://hadam.mirim-it-show.site/write-diary`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
