@@ -29,7 +29,7 @@ export default function Community() {
     if (!token) return;
     const fetchDiaries = async () => {
       try {
-        const res = await axios.get("http://54.180.104.56:3000/write-diary", {
+        const res = await axios.get("https://hadam.mirim-it-show.site/write-diary", {
           headers: { Authorization: `Bearer ${token}` },
         });
         const publicDiaries = res.data
@@ -46,7 +46,7 @@ export default function Community() {
         // 반응 개수 로드
         publicDiaries.forEach((d) => {
           axios
-            .get(`http://54.180.104.56:3000/reactions/${d.id}`, {
+            .get(`https://hadam.mirim-it-show.site/reactions/${d.id}`, {
               headers: { Authorization: `Bearer ${token}` },
             })
             .then((r) => {
@@ -70,7 +70,7 @@ export default function Community() {
   useEffect(() => {
     if (!token) return;
     axios
-      .get("http://54.180.104.56:3000/users", {
+      .get("https://hadam.mirim-it-show.site/users", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -94,7 +94,7 @@ export default function Community() {
     if (!diaryId || !user_id) return;
     try {
       await axios.post(
-        "http://54.180.104.56:3000/reactions",
+        "https://hadam.mirim-it-show.site/reactions",
         {
           diary_id: diaryId,
           reaction_type: idx.toString(),
@@ -108,7 +108,7 @@ export default function Community() {
         }
       );
       // 최신 반응 개수로 업데이트
-      const r = await axios.get(`http://54.180.104.56:3000/reactions/${diaryId}`, {
+      const r = await axios.get(`https://hadam.mirim-it-show.site/reactions/${diaryId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       const counts = [0, 0, 0, 0];

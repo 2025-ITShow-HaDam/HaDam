@@ -83,7 +83,7 @@ function My() {
   useEffect(() => {
     async function fetchEvents() {
       try {
-        const res = await axios.post("http://54.180.104.56:3000/event");
+        const res = await axios.post("https://hadam.mirim-it-show.site/event");
         const map = new Map();
         res.data.events.forEach((ev) => {
           const key = formatDate(new Date(ev.date));

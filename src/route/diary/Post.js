@@ -11,7 +11,7 @@ function Post() {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get("http://54.180.104.56:3000/write-diary", {
+        const response = await axios.get("https://hadam.mirim-it-show.site/write-diary", {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -42,7 +42,7 @@ function Post() {
     e.stopPropagation();
     try {
       // 서버에 삭제 요청
-      await axios.delete(`http://54.180.104.56:3000/write-diary/${id}`, {
+      await axios.delete(`https://hadam.mirim-it-show.site/write-diary/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
