@@ -1,14 +1,18 @@
-import { useState } from 'react';
-import Quote from '../components/quote'
+import Quote from '../components/main/quote'
+import styles from "../components/main/main.module.css"
+import Best from "../components/main/best"
+import Nav from "../components/nav"
 
-function Home_Screen() {
+function Home() {
     return (
-        <div>
-            <img src='/ri_double-quotes-l.png'/>
+        <div className={styles.main_section}>
+            <img src='images/ri_double-quotes-l.png' className={`${styles.img} ${styles.right}`} />
             <Quote />
-            <img src='/ri_double-quotes-r.png' />
+            <img src='images/ri_double-quotes-r.png' className={`${styles.img} ${styles.left}`} />
+            <Best />
+            <Nav />
         </div>
     );
 }
 
-export default Home_Screen;
+export default Home;

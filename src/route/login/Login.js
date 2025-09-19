@@ -2,26 +2,52 @@ import { useState } from "react";
 import "../../reset.css";
 import Input from "../../components/input/Input";
 import style from "./Login.module.css"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "../../components/button/button";
+import axios from "axios";
 
 
 function Login() {
-  const [username, setUsername] = useState("");
+  const navigate = useNavigate();
+  const [userId, setUserID] = useState("");
   const [password, setPassword] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await axios.post("https://hadam.mirim-it-show.site/api/auth/login", {
+        user_id : userId,
+        password
+      });
+      console.log(response.data);
+      
+      const { token, user_id, email, name, profile } = response.data;
+      alert("로그인 성공!");
+      localStorage.setItem("token", token);
+      localStorage.setItem("email", email);
+      localStorage.setItem("user_id", user_id);
+      localStorage.setItem("name", name);
+      localStorage.setItem("profile", profile);
+       navigate('/');
+    } catch (error) {
+      console.error("로그인 실패:", error);
+      alert("로그인 실패. 아이디와 비밀번호를 확인해주세요.");
+    }
+  };
 
   return (
     <main className={style.main}>
       <h2 className={style.title}>로그인</h2>
 
-      <form>
+      <form onSubmit={handleSubmit}>
         <Input
           type="text"
-          placeholder="Enter username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+          placeholder="Enter userId"
+          value={userId}
+          onChange={(e) => setUserID(e.target.value)}
           label="아이디"
-          id="username"
+          id="user_id"
         />
         <Input
           type="password"
@@ -32,12 +58,11 @@ function Login() {
           id="password"
         />
         <Button text="로그인" type="submit"/>
-        
       </form>
 
       <section className={style.footer}>
         <div>계정이 없으신가요?</div>
-        <Link to="/signup"  style={{ textDecoration: "none"}}>
+        <Link to="/signup" style={{ textDecoration: "none"}}>
           <div className={style.color}>가입하기</div>
         </Link>
       </section>

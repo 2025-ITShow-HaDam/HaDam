@@ -1,36 +1,78 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
 import Input from "../../components/input/Input";
 import "../../reset.css";
 import Button from "../../components/button/button";
 import style from "./Signup.module.css"
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
-    username: "",
+    user_id: "",
+    email: "",
     password: "",
-    confirmpassword:"",
-    nickname:""
-  })
+    confirmpassword: "",
+    name: "",
+  });
 
   const handleChange = (e) => {
-    const {id, value} = e.target;
-    setForm((item) => ({
-      ...item,
+    const { id, value } = e.target;
+    setForm((prev) => ({
+      ...prev,
       [id]: value,
-    }))
-  }
+    }));
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // 비밀번호 확인 체크
+    if (form.password !== form.confirmpassword)  {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    try {
+      const response = await axios.post("https://hadam.mirim-it-show.site/users", {
+        user_id: form.user_id,
+        email: form.email,
+        password: form.password,
+        name: form.name,
+      });
+      alert("회원가입 성공!");
+      localStorage.setItem("user_id", form.user_id);
+      localStorage.setItem("email", form.email);
+      localStorage.setItem("name", form.name);
+      
+      const res = await axios.get(`https://hadam.mirim-it-show.site/users/${form.user_id}`);
+      const { profile } = res.data;
+      localStorage.setItem("profile", profile)
+      navigate('/login');
+      
+    } catch (error) {
+      console.error("회원가입 오류:", error);
+      alert("회원가입 실패");
+    }
+  };
 
   return (
     <div className={style.main}>
       <h2 className={style.title}>회원가입</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
         <Input
           type="text"
-          value={form.username}
+          value={form.user_id}
           onChange={handleChange}
           label="아이디"
-          id="username"
+          id="user_id"
+        />
+        <Input
+          type="email"
+          value={form.email}
+          onChange={handleChange}
+          label="이메일"
+          id="email"
         />
         <Input
           type="password"
@@ -48,12 +90,12 @@ function Signup() {
         />
         <Input
           type="text"
-          value={form.nickname}
+          value={form.name}
           onChange={handleChange}
-          label="닉네임"
-          id="nickname"
+          label="이름"
+          id="name"
         />
-        <Button text="회원가입" type="submit"/>
+        <Button text="회원가입" type="submit" />
       </form>
     </div>
   );
